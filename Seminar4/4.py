@@ -31,7 +31,6 @@ def generate_polynomial(k):
     return polynomial
 
 
-# Примеры использования
 k = int(input("Введите степень многочлена: "))
 polynomial = generate_polynomial(k)
 print(polynomial)
