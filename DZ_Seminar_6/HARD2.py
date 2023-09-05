@@ -40,9 +40,13 @@ def try_int_get(number):
     try:
         number = int(number)
     except ValueError:
-        msgbox('Вы ввели не натуральное число, пора начинать заново')
+        msgbox('Вы ввели не натуральное число от, пора начинать заново')
         exit()
-    return int(number)
+    if 0 > int(number) or int(number) > 3:
+        msgbox('Ваше число не подходит диапозону от 0 до 2')
+        exit()
+    else:
+        return int(number)
 
 
 def bot_xo(field, turn):
