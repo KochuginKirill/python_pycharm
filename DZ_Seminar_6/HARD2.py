@@ -79,19 +79,19 @@ def bot_xo(field, turn):
 {string_2}
 {string_3}""", 'ход бота')
                     if field[:][0].count('|X|') == 3 or field[:][1].count('|X|') == 3 or field[:][2].count('|X|') == 3:
-                        print('Вы победили!')
+                        msgbox('Вы победили!')
                         exit()
                     if [a[0] for a in field].count('|X|') == 3 or [a[1] for a in field].count('|X|') == 3 or [a[2] for a
                                                                                                               in
                                                                                                               field].count(
                         '|X|') == 3:
-                        print('Вы победили!')
+                        msgbox('Вы победили!')
                         exit()
                     if field[0][0] == '|X|' and field[1][1] == '|X|' and field[2][2] == '|X|':
-                        print('Вы победили!')
+                        msgbox('Вы победили!')
                         exit()
                     if field[0][2] == '|X|' and field[1][1] == '|X|' and field[2][0] == '|X|':
-                        print('Вы победили!')
+                        msgbox('Вы победили!')
                         exit()
                     turn = False
                     return bot_xo(field, turn)
@@ -127,17 +127,17 @@ def bot_xo(field, turn):
 {string_3}""", 'теперь ход бота')
                             if field[:][0].count('|0|') == 3 or field[:][1].count('|0|') == 3 or field[:][2].count(
                                     '|0|') == 3:
-                                print('Бот победил!')
+                                msgbox('Бот победил!')
                                 exit()
                             if [a[0] for a in field].count('|0|') == 3 or [a[1] for a in field].count('|0|') == 3 or [
                                 a[2] for a in field].count('|0|') == 3:
-                                print('Бот победил!')
+                                msgbox('Бот победил!')
                                 exit()
                             if field[0][0] == '|0|' and field[1][1] == '|0|' and field[2][2] == '|0|':
-                                print('Бот победил!')
+                                msgbox('Бот победил!')
                                 exit()
                             if field[0][2] == '|0|' and field[1][1] == '|0|' and field[2][0] == '|0|':
-                                print('Бот победил!')
+                                msgbox('Бот победил!')
                                 exit()
                             turn = True
                             return bot_xo(field, turn)
