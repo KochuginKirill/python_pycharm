@@ -47,15 +47,16 @@ def try_int_get(number):
 
 def bot_xo(field, turn):
     for i in field:
-        if i == '|_|':
+        print([a[0] for a in field].count('|_|'))
+        if [a[0] for a in field].count('|_|') == 0 and [a[1] for a in field].count('|_|') == 0 and [a[2] for a in field].count('|_|') == 0:
             string_1 = ''.join(map(str, field[0][:]))
             string_2 = ''.join(map(str, field[1][:]))
             string_3 = ''.join(map(str, field[2][:]))
             msgbox(f"""{string_1}
 {string_2}
 {string_3}""", 'поле')
-            print()
             print('Ничья')
+            msgbox('Ничья')
             exit()
         else:
             if turn:
@@ -68,7 +69,7 @@ def bot_xo(field, turn):
                 string = try_int_get(string)
                 column = enterbox(f"""{string_1}
 {string_2}
-{string_3}""",  'Введите номер столбца, где будет Х', '')
+{string_3}""", 'Введите номер столбца, где будет Х', '')
                 column = try_int_get(column)
                 if field[string][column] == '|_|':
                     field[string][column] = '|X|'
