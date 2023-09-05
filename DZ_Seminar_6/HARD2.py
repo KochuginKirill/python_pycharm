@@ -47,7 +47,6 @@ def try_int_get(number):
 
 def bot_xo(field, turn):
     for i in field:
-        print([a[0] for a in field].count('|_|'))
         if [a[0] for a in field].count('|_|') == 0 and [a[1] for a in field].count('|_|') == 0 and [a[2] for a in field].count('|_|') == 0:
             string_1 = ''.join(map(str, field[0][:]))
             string_2 = ''.join(map(str, field[1][:]))
