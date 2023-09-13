@@ -53,19 +53,20 @@ def change_line_phonebook():
     for line in data:
         if search.lower() in line.lower():
             result = line
-    if result is not None:
+    if len(result) > 0:
         msgbox(f'Найден следующий элемент {result}')
     else:
         msgbox('Элемент для удаления не найден')
     data.close()
-    new_name = enterbox('Введите новое имя')
-    new_telephone = enterbox('Введите новый телефон(ы)')
-    input_result = new_name + ' ' + new_telephone
-    with open('BD_phonebook.txt', 'r', encoding = "UTF-8") as dana_inputed:
-        old_data = dana_inputed.read()
-    new_data = old_data.replace(f'{result}', f'{input_result}')
-    with open('BD_phonebook.txt', 'w', encoding = "UTF-8") as dana_inputed:
-        dana_inputed.write(new_data)
+    if len(result) > 0:
+        new_name = enterbox('Введите новое имя')
+        new_telephone = enterbox('Введите новый телефон(ы)')
+        input_result = new_name + ' ' + new_telephone
+        with open('BD_phonebook.txt', 'r', encoding = "UTF-8") as dana_inputed:
+            old_data = dana_inputed.read()
+        new_data = old_data.replace(f'{result}', f'{input_result}')
+        with open('BD_phonebook.txt', 'w', encoding = "UTF-8") as dana_inputed:
+            dana_inputed.write(new_data)
 
 
 def delete_line_phonebook():
@@ -75,21 +76,22 @@ def delete_line_phonebook():
     for line in data:
         if search.lower() in line.lower():
             result = line
-    if result is not None:
+    if len(result) > 0:
         msgbox(f'Найден следующий элемент {result}')
     else:
         msgbox('Элемент для удаления не найден')
     data.close()
-    with open('BD_phonebook.txt', encoding = "UTF-8") as BD_phonebook:
-        lines = BD_phonebook.readlines()
-    pattern = re.compile(re.escape(result))
-    with open('BD_phonebook.txt', 'w', encoding = "UTF-8") as BD_phonebook:
-        for line in lines:
-            result = pattern.search(line)
-            if result is None:
-                BD_phonebook.write(line)
-    BD_phonebook.close()
-    msgbox('Элемент удален')
+    if len(result) > 0:
+        with open('BD_phonebook.txt', encoding = "UTF-8") as BD_phonebook:
+            lines = BD_phonebook.readlines()
+        pattern = re.compile(re.escape(result))
+        with open('BD_phonebook.txt', 'w', encoding = "UTF-8") as BD_phonebook:
+            for line in lines:
+                result = pattern.search(line)
+                if result is None:
+                    BD_phonebook.write(line)
+        BD_phonebook.close()
+        msgbox('Элемент удален')
 
 
 
