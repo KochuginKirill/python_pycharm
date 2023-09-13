@@ -26,7 +26,7 @@ def show_phonebook():
 def add_line_phonebook():
     data = open('BD_phonebook.txt', 'a', encoding = "UTF-8")
     new_name = enterbox('Введите название нового контакта')
-    new_number = enterbox('Введите норер(а) нового контакта')
+    new_number = enterbox('Введите номер(а) нового контакта')
     data.writelines(f'''
 {new_name} {new_number}''')
     data.close()
