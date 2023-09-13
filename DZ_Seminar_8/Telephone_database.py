@@ -1,6 +1,5 @@
 from easygui import *
 import re
-import os
 
 
 def try_int_get(number):
