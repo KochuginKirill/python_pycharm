@@ -1,8 +1,6 @@
 from easygui import *
 import re
 import datetime as DT
-import json
-import requests
 
 
 def try_int_get(number):
@@ -21,13 +19,7 @@ def show_notes():
     counter = 1
     for i in range(len(temp)):
         if len(temp[i]) > 0:
-            parts = temp[i].split(";")
-            print(f'''----------------------------------------------------
-№{counter}. {parts[0]}
-{parts[1]}
-{parts[2]}
-----------------------------------------------------''')
-
+            print(f'№{counter}. {temp[i]}')
             counter += 1
     data.close()
 
@@ -36,7 +28,7 @@ def add_note():
     data = open('notes.json', 'a', encoding = "UTF-8")
     title = enterbox('Введите название заметки')
     text = enterbox('Введите заметку')
-    data.writelines(f'''Заголовок: {title}; Текст: {text}; Дата: {DT.datetime.utcnow()}
+    data.writelines(f'''Заголовок: {title}. Текст: {text} Дата: {DT.datetime.utcnow()}
 ''')
     data.close()
 
@@ -70,7 +62,7 @@ def change_note():
     if len(result) > 0:
         title = enterbox('Введите новое название')
         text = enterbox('Введите новую заметку')
-        input_result = (f'''Заголовок: {title}; Текст: {text}; Дата: {DT.datetime.utcnow()}
+        input_result = (f'''Заголовок: {title}. Текст: {text} Дата: {DT.datetime.utcnow()}
 ''')
         with open('notes.json', 'r', encoding = "UTF-8") as dana_inputed:
             old_data = dana_inputed.read()
