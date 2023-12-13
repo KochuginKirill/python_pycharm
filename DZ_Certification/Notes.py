@@ -116,15 +116,15 @@ def delete_note():
         msgbox('Элемент для удаления не найден')
     data.close()
     if len(result) > 0:
-        with open('notes.json', encoding = "UTF-8") as BD_phonebook:
-            lines = BD_phonebook.readlines()
+        with open('notes.json', encoding = "UTF-8") as notes:
+            lines = notes.readlines()
         pattern = re.compile(re.escape(result))
-        with open('notes.json', 'w', encoding = "UTF-8") as BD_phonebook:
+        with open('notes.json', 'w', encoding = "UTF-8") as notes:
             for line in lines:
                 result = pattern.search(line)
                 if result is None:
-                    BD_phonebook.write(line)
-        BD_phonebook.close()
+                    notes.write(line)
+        notes.close()
         msgbox('Элемент удален')
 
 
@@ -133,27 +133,25 @@ def show_sorted_by_date():
     data = open('notes.json', 'r', encoding = "UTF-8")
     temp = sorted(data.readlines())
     maxDate = DT.datetime.min
-    for i in range(len(temp)):
-        if len(temp[i]) > 0:
+    for k in range(len(temp)):
+        global i
+        for i in range(len(temp)):
+            if len(temp[i]) > 0:
+                if temp[i] != " ":
+                    parts = temp[i].split(";")
+                    dateCheck = datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f')
+                    if dateCheck > maxDate:
+                        maxDate = dateCheck
+        for j in range(len(temp)):
             if temp[i] != " ":
                 parts = temp[i].split(";")
-                print(parts[3])
-                dateCheck = datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f')
-                if dateCheck > maxDate:
-                    maxDate = dateCheck
-            for j in range(len(temp)):
-                if temp[j] != " ":
-                    parts = temp[j].split(";")
-                    if datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f') == maxDate:
-                        print(f'''----------------------------------------------------
+                if datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f') == maxDate:
+                    print(f'''----------------------------------------------------
 {parts[0]}
 {parts[1]}
 {parts[2]}
 {parts[3]}
-    ----------------------------------------------------''')
-                        temp.remove(temp[i])
-                        temp.append(" ")
-                        i = 0
-                        continue
-
+----------------------------------------------------''')
+                    temp[i] = " "
+                    maxDate = DT.datetime.min
     data.close()
