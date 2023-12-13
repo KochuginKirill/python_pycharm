@@ -75,6 +75,7 @@ def change_note():
     data = open('notes.json', 'r', encoding = "UTF-8")
     search = enterbox('Введите название или часть текста заметки, которую хотите изменить')
     result = ''
+    id = -1
     for line in data:
         if search.lower() in line.lower():
             result = line
@@ -84,13 +85,15 @@ def change_note():
         {parts[1]}
         {parts[2]}
         {parts[3]}''')
+        partId = parts[0].split(" ")
+        id = partId[1]
     else:
         msgbox('Элемент не найден')
     data.close()
     if len(result) > 0:
         title = enterbox('Введите новое название')
         text = enterbox('Введите новую заметку')
-        input_result = (f'''Заголовок: {title}; Текст: {text}; Дата: {DT.datetime.today()}
+        input_result = (f'''id: {id}; Заголовок: {title}; Текст: {text};{DT.datetime.today()}; 
 ''')
         with open('notes.json', 'r', encoding = "UTF-8") as dana_inputed:
             old_data = dana_inputed.read()
@@ -140,20 +143,20 @@ def show_sorted_by_date():
                 if copyTemp[i] != "просмотрено":
                     parts = copyTemp[i].split(";")
                     dateCheck = datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f')
-                    print(parts[3])
-                    print(maxDate)
                     if dateCheck > maxDate:
                         maxDate = dateCheck
         for j in range(len(temp)):
-            parts = temp[j].split(";")
-            print(parts[3])
-            if datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f') == maxDate:
-                print(f'''----------------------------------------------------
+            if len(copyTemp[i]) > 0:
+                if temp[j] != "просмотрено":
+                    parts = temp[j].split(";")
+                    if datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f') == maxDate:
+                        print(f'''----------------------------------------------------
 {parts[0]}
 {parts[1]}
 {parts[2]}
 {parts[3]}
 ----------------------------------------------------''')
-                copyTemp[i] = "просмотрено"
-                maxDate = DT.datetime.min
+                        copyTemp[j] = "просмотрено"
+                        maxDate = DT.datetime.min
+                        continue
     data.close()
