@@ -1,6 +1,7 @@
 from easygui import *
 import re
 import datetime as DT
+from datetime import datetime
 
 
 def try_int_get(number):
@@ -21,20 +22,33 @@ def show_notes():
         if len(temp[i]) > 0:
             parts = temp[i].split(";")
             print(f'''----------------------------------------------------
-№{counter}. {parts[0]}
+№{counter}
+{parts[0]}
 {parts[1]}
 {parts[2]}
+{parts[3]}
 ----------------------------------------------------''')
-
             counter += 1
+
     data.close()
 
 
 def add_note():
     data = open('notes.json', 'a', encoding = "UTF-8")
+    data.close()
+    data = open('notes.json', 'r', encoding = "UTF-8")
+    temp = sorted(data.readlines())
+    counter = 0
+    for i in range(len(temp)):
+        if len(temp[i]) > 0:
+            parts = temp[i].split(";")
+            partOfPart = parts[0].split(" ")
+            counter = int(partOfPart[1]) + 1
+    data.close()
+    data = open('notes.json', 'a', encoding = "UTF-8")
     title = enterbox('Введите название заметки')
     text = enterbox('Введите заметку')
-    data.writelines(f'''Заголовок: {title}; Текст: {text}; Дата: {DT.datetime.utcnow()}
+    data.writelines(f'''id: {counter}; Заголовок: {title}; Текст: {text};{DT.datetime.today()}; 
 ''')
     data.close()
 
@@ -50,7 +64,8 @@ def search_note():
         parts = result.split(";")
         msgbox(f'''Нашлась следующая заметка: {parts[0]}
 {parts[1]}
-{parts[2]}''')
+{parts[2]}
+{parts[3]}''')
     else:
         msgbox('Такая заметка не найдена')
         data.close()
@@ -67,14 +82,15 @@ def change_note():
         parts = result.split(";")
         msgbox(f'''Нашлась следующая заметка: {parts[0]}
         {parts[1]}
-        {parts[2]}''')
+        {parts[2]}
+        {parts[3]}''')
     else:
         msgbox('Элемент не найден')
     data.close()
     if len(result) > 0:
         title = enterbox('Введите новое название')
         text = enterbox('Введите новую заметку')
-        input_result = (f'''Заголовок: {title}; Текст: {text}; Дата: {DT.datetime.utcnow()}
+        input_result = (f'''Заголовок: {title}; Текст: {text}; Дата: {DT.datetime.today()}
 ''')
         with open('notes.json', 'r', encoding = "UTF-8") as dana_inputed:
             old_data = dana_inputed.read()
@@ -94,7 +110,8 @@ def delete_note():
         parts = result.split(";")
         msgbox(f'''Нашлась следующая заметка: {parts[0]}
         {parts[1]}
-        {parts[2]}''')
+        {parts[2]}
+        {parts[3]}''')
     else:
         msgbox('Элемент для удаления не найден')
     data.close()
@@ -109,3 +126,34 @@ def delete_note():
                     BD_phonebook.write(line)
         BD_phonebook.close()
         msgbox('Элемент удален')
+
+
+def show_sorted_by_date():
+    print('==========================================================')
+    data = open('notes.json', 'r', encoding = "UTF-8")
+    temp = sorted(data.readlines())
+    maxDate = DT.datetime.min
+    for i in range(len(temp)):
+        if len(temp[i]) > 0:
+            if temp[i] != " ":
+                parts = temp[i].split(";")
+                print(parts[3])
+                dateCheck = datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f')
+                if dateCheck > maxDate:
+                    maxDate = dateCheck
+            for j in range(len(temp)):
+                if temp[j] != " ":
+                    parts = temp[j].split(";")
+                    if datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f') == maxDate:
+                        print(f'''----------------------------------------------------
+{parts[0]}
+{parts[1]}
+{parts[2]}
+{parts[3]}
+    ----------------------------------------------------''')
+                        temp.remove(temp[i])
+                        temp.append(" ")
+                        i = 0
+                        continue
+
+    data.close()

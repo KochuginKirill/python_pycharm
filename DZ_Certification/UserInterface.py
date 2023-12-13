@@ -8,7 +8,8 @@ while True:
 3 - Найти заметку
 4 - Изменить заметку
 5 - Удалить заметку
-6 - выход''', 'Введите цифру запроса')
+6 - Отсортированный по дате вывод
+7 - Выход''', 'Введите цифру запроса')
     user_input = Notes.try_int_get(user_input)
     if user_input == 1:
         try:
@@ -18,10 +19,24 @@ while True:
     elif user_input == 2:
         Notes.add_note()
     elif user_input == 3:
-        Notes.search_note()
+        try:
+            Notes.search_note()
+        except FileNotFoundError:
+            msgbox("Файл не найден, воспользуйтесь функцией добавления заметки для его создания (2)")
     elif user_input == 4:
-        Notes.change_note()
+        try:
+            Notes.change_note()
+        except FileNotFoundError:
+            msgbox("Файл не найден, воспользуйтесь функцией добавления заметки для его создания (2)")
     elif user_input == 5:
-        Notes.delete_note()
+        try:
+            Notes.delete_note()
+        except FileNotFoundError:
+            msgbox("Файл не найден, воспользуйтесь функцией добавления заметки для его создания (2)")
     elif user_input == 6:
+        try:
+            Notes.show_sorted_by_date()
+        except FileNotFoundError:
+            msgbox("Файл не найден, воспользуйтесь функцией добавления заметки для его создания (2)")
+    elif user_input == 7:
         break
