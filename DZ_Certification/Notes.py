@@ -132,26 +132,28 @@ def show_sorted_by_date():
     print('==========================================================')
     data = open('notes.json', 'r', encoding = "UTF-8")
     temp = sorted(data.readlines())
+    copyTemp = temp
     maxDate = DT.datetime.min
     for k in range(len(temp)):
-        global i
-        for i in range(len(temp)):
-            if len(temp[i]) > 0:
-                if temp[i] != " ":
-                    parts = temp[i].split(";")
+        for i in range(len(copyTemp)):
+            if len(copyTemp[i]) > 0:
+                if copyTemp[i] != "просмотрено":
+                    parts = copyTemp[i].split(";")
                     dateCheck = datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f')
+                    print(parts[3])
+                    print(maxDate)
                     if dateCheck > maxDate:
                         maxDate = dateCheck
         for j in range(len(temp)):
-            if temp[i] != " ":
-                parts = temp[i].split(";")
-                if datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f') == maxDate:
-                    print(f'''----------------------------------------------------
+            parts = temp[j].split(";")
+            print(parts[3])
+            if datetime.strptime(parts[3], '%Y-%m-%d %H:%M:%S.%f') == maxDate:
+                print(f'''----------------------------------------------------
 {parts[0]}
 {parts[1]}
 {parts[2]}
 {parts[3]}
 ----------------------------------------------------''')
-                    temp[i] = " "
-                    maxDate = DT.datetime.min
+                copyTemp[i] = "просмотрено"
+                maxDate = DT.datetime.min
     data.close()
