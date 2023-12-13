@@ -11,7 +11,10 @@ while True:
 6 - выход''', 'Введите цифру запроса')
     user_input = Notes.try_int_get(user_input)
     if user_input == 1:
-        Notes.show_notes()
+        try:
+            Notes.show_notes()
+        except FileNotFoundError:
+            msgbox("Файл не найден, воспользуйтесь функцией добавления заметки для его создания (2)")
     elif user_input == 2:
         Notes.add_note()
     elif user_input == 3:

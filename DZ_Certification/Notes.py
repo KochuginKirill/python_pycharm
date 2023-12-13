@@ -1,8 +1,6 @@
 from easygui import *
 import re
 import datetime as DT
-import json
-import requests
 
 
 def try_int_get(number):
@@ -49,7 +47,10 @@ def search_note():
         if search.lower() in line.lower():
             result = line
     if len(result) > 0:
-        msgbox(f'Нашелся: {result}')
+        parts = result.split(";")
+        msgbox(f'''Нашлась следующая заметка: {parts[0]}
+{parts[1]}
+{parts[2]}''')
     else:
         msgbox('Такая заметка не найдена')
         data.close()
@@ -63,7 +64,10 @@ def change_note():
         if search.lower() in line.lower():
             result = line
     if len(result) > 0:
-        msgbox(f'Найден следующий элемент {result}')
+        parts = result.split(";")
+        msgbox(f'''Нашлась следующая заметка: {parts[0]}
+        {parts[1]}
+        {parts[2]}''')
     else:
         msgbox('Элемент не найден')
     data.close()
@@ -87,7 +91,10 @@ def delete_note():
         if search.lower() in line.lower():
             result = line
     if len(result) > 0:
-        msgbox(f'Найден следующий элемент {result}')
+        parts = result.split(";")
+        msgbox(f'''Нашлась следующая заметка: {parts[0]}
+        {parts[1]}
+        {parts[2]}''')
     else:
         msgbox('Элемент для удаления не найден')
     data.close()
