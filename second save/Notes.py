@@ -2,6 +2,7 @@ from easygui import *
 import re
 import datetime as DT
 from datetime import datetime
+import json
 
 
 def try_int_get(number):
@@ -45,11 +46,12 @@ def add_note():
             partOfPart = parts[0].split(" ")
             counter = int(partOfPart[1]) + 1
     data.close()
-    data = open('notes.json', 'a', encoding = "UTF-8")
+    data = open("notes.json", "a", encoding = "UTF-8")
     title = enterbox('Введите название заметки')
     text = enterbox('Введите заметку')
-    data.writelines(f'''id: {counter}; Заголовок: {title}; Текст: {text};{DT.datetime.today()}; 
+    fileInput = json.dumps(f'''id: {counter}; Header: {title}; Text: {text};{DT.datetime.today()}; 
 ''')
+    json.dump(fileInput, data)
     data.close()
 
 
@@ -93,13 +95,13 @@ def change_note():
     if len(result) > 0:
         title = enterbox('Введите новое название')
         text = enterbox('Введите новую заметку')
-        input_result = (f'''id: {id}; Заголовок: {title}; Текст: {text};{DT.datetime.today()}; 
+        input_result = json.dumps(f'''id: {id}; Header: {title}; Text: {text};{DT.datetime.today()}; 
 ''')
         with open('notes.json', 'r', encoding = "UTF-8") as dana_inputed:
             old_data = dana_inputed.read()
         new_data = old_data.replace(f'{result}', f'{input_result}')
         with open('notes.json', 'w', encoding = "UTF-8") as dana_inputed:
-            dana_inputed.write(new_data)
+            json.dump(new_data, dana_inputed)
 
 
 def delete_note():
